@@ -51,11 +51,22 @@ div.page-error-style{
 	width:50%;
 	margin:0 auto;
 }
+.align-left{
+	text-align:left;
+}
 .align-center{
 	text-align:center;
 }
 .align-right{
 	text-align:right;
+}
+.header-member{
+	text-align: right;
+	list-style: none;
+}
+.header-member li{
+	display:inline;
+	padding:5px;
 }
 /*회원관리*/
 form ul{

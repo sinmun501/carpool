@@ -1,0 +1,49 @@
+-- member table --
+create table member(
+    mem_id varchar2(30) not null primary key,
+    mem_auth number(1) default 1 not null
+);
+create table member_detail(
+    mem_id varchar2(30) not null primary key,
+    mem_pw varchar2(30) not null,
+    mem_name varchar2(30) not null,
+    mem_gender varchar2(3) not null,
+    mem_grade varchar2(5) default '일반회원' not null,
+    mem_phone varchar2(15) not null,
+    mem_email varchar2(50) not null,
+    mem_date date not null,
+    mem_image blob,
+    mem_filename varchar2(100),
+    constraint member_detail_fk1 foreign key (mem_id) references member (mem_id)
+);
+
+
+-- car table --
+create table car(
+    car_seq number not null primary key,
+    car_image blob,
+    car_registration_num varchar2(30) not null,
+    car_model varchar2(30) not null
+);
+
+create sequence car_seq;
+
+
+-- driver table --
+create table driver(
+    driver_seq number not null primary key,
+    driver_license_num varchar2(20) not null,
+    driver_account number not null,
+    driver_can_animal char(1),
+    driver_can_smoking char(1),
+    driver_can_charge char(1),
+    driver_money number not null,
+    driver_date date not null,
+    mem_id varchar2(30) not null,
+    car_seq number not null,
+    
+    constraint driver_fk1 foreign key (mem_id) references member (mem_id),
+    constraint driver_fk2 foreign key (car_seq) references car (car_seq)
+);
+
+create sequence driver_seq;
