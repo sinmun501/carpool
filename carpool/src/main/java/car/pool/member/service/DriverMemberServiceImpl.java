@@ -15,10 +15,10 @@ public class DriverMemberServiceImpl implements DriverMemberService{
 	
 	@Override
 	public void insert(DriverMemberCommand driverMember) {
+		driverMember.setCar_seq(driverMapper.getSeq());
 		driverMapper.insertCar(driverMember);
 		driverMapper.insertDriver(driverMember);
 		driverMapper.insert(driverMember);
 	}
-
 
 }

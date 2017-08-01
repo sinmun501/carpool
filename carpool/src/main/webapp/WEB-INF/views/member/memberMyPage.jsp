@@ -8,6 +8,10 @@
 
 <div class="page-main-style">
 	<h2>마이 페이지</h2>
+	<p class="align-right">
+		<a href="${pageContext.request.contextPath}/member/driverWrite.do">운전자 등록</a>
+		<a href="${pageContext.request.contextPath}/member/driverDetail.do">운전자 정보</a>
+	</p>
 	<ul>
 		<c:if test="${fn:endsWith(member.mem_filename, '.jpg') || 
 				  fn:endsWith(member.mem_filename, '.JPG') ||
