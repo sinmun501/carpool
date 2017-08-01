@@ -64,7 +64,7 @@ public class MemberController {
 	
 	//로그인
 	@RequestMapping(value="/member/login.do", method=RequestMethod.POST)
-	public String submit(@ModelAttribute("command") @Valid MemberCommand memberCommand, BindingResult result, HttpSession session){
+	public String login(@ModelAttribute("command") @Valid MemberCommand memberCommand, BindingResult result, HttpSession session){
 		
 		if(log.isDebugEnabled())
 			log.debug("<<memberCommand>> : " + memberCommand);
@@ -105,7 +105,7 @@ public class MemberController {
 	//로그인 시 ID 중복체크
 	@RequestMapping("/member/confirmId.do")
 	@ResponseBody 
-	public Map<String, String> process(@RequestParam("mem_id") String mem_id){
+	public Map<String, String> confirmId(@RequestParam("mem_id") String mem_id){
 		
 		/*
 		 	JSON 문자열로 만듬. (JSON처리할 때는 tiles처리를 하면 안됨. map을 반환만 해주면 tiles를 사용하지않고 viewResolver쪽 order=2 차례로가서 처리된다.)
@@ -129,7 +129,7 @@ public class MemberController {
 	
 	//로그아웃
 	@RequestMapping("/member/logout.do")
-	public String process(HttpSession session){
+	public String logout(HttpSession session){
 		//로그아웃
 		session.invalidate();
 		return "redirect:/main/main.do";
@@ -137,7 +137,7 @@ public class MemberController {
 	
 	//마이페이지 (상세)
 	@RequestMapping("/member/mypage.do")
-	public String form(HttpSession session, Model model){ 
+	public String mypage(HttpSession session, Model model){ 
 
 		//session에서 id를 끄집어내서 1건의 데이터를 가져옴.
 		String id = (String)session.getAttribute("user_id");
@@ -165,5 +165,85 @@ public class MemberController {
 
 		return mav;
 	}
+	
+	//회원수정 폼
+	@RequestMapping(value="/member/update.do", method=RequestMethod.GET)
+	public String updateForm(HttpSession session, Model model){ 
+		
+		//session에서 id를 끄집어내서 1건의 데이터를 가져옴.
+		String id = (String)session.getAttribute("user_id");
+
+		MemberCommand member = memberService.selectMember(id);
+		model.addAttribute("command", member);
+		
+		return "memberUpdate";
+	}
+	
+	//회원수정
+	@RequestMapping(value="/member/update.do", method=RequestMethod.POST)
+	public String update(@ModelAttribute("command") @Valid MemberCommand memberCommand, BindingResult result){
+		
+		if(log.isDebugEnabled())
+			log.debug("<<memberCommand>> : " + memberCommand);
+		
+		if(result.hasErrors())
+			return "memberUpdate";
+		
+		// 회원정보 수정. 
+		memberService.update(memberCommand);
+		
+		return "redirect:/member/mypage.do";
+	}
+	
+	//회원탈퇴 폼
+	@RequestMapping(value="/member/delete.do", method=RequestMethod.GET)
+	public String deleteForm(HttpSession session, Model model){
+		
+		String id = (String)session.getAttribute("user_id");
+		
+		MemberCommand member = new MemberCommand();
+		member.setMem_id(id);
+		
+		model.addAttribute("command", member);
+		
+		return "memberDelete";
+	}
+	
+	@RequestMapping(value="/member/delete.do", method=RequestMethod.POST)
+	public String delete(@ModelAttribute("command") @Valid MemberCommand memberCommand, BindingResult result, HttpSession session){
+		
+		if(log.isDebugEnabled())
+			log.debug("<<memberCommand>> : " + memberCommand);
+		
+		if(result.hasFieldErrors("mem_pw"))
+			return "memberDelete";
+		
+		try{
+			MemberCommand member = memberService.selectMember(memberCommand.getMem_id());
+			
+			boolean check = false;
+			
+			if(member != null){
+				//비밀번호 일치여부 체크
+				check = member.isCheckedPasswd(memberCommand.getMem_pw());
+			}
+			
+			if(check){
+				//인증성공, 회원정보삭제
+				memberService.delete(memberCommand.getMem_id());
+				//로그아웃
+				session.invalidate();
+				return "redirect:/main/main.do";
+			}else{
+				//인증실패
+				throw new Exception();
+			}
+		}catch(Exception e){
+			result.rejectValue("mem_pw", "invalidPassword");
+			return "memberDelete";
+		}
+	}
+	
+	
 	
 }

@@ -20,14 +20,20 @@
     	<put-attribute name="body" value="/WEB-INF/views/member/memberMyPage.jsp" />
     </definition>
     
-    <definition name="memberModify" extends="main">
+    <definition name="memberUpdate" extends="main">
 		<put-attribute name="title" value="회원 정보 수정" />
-    	<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp" />
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberUpdate.jsp" />
     </definition>
     
     <definition name="memberDelete" extends="main">
 		<put-attribute name="title" value="회원 탈퇴" />
     	<put-attribute name="body" value="/WEB-INF/views/member/memberDelete.jsp" />
     </definition>
+    
+    <definition name="driverWrite" extends="main">
+    	<put-attribute name="title" value="운전자 등록" />
+    	<put-attribute name="body" value="/WEB-INF/views/member/driverWrite.jsp" />
+    </definition>
+    
     
 </tiles-definitions>

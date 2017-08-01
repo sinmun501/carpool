@@ -1,5 +1,6 @@
 package car.pool.member.dao;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -21,9 +22,13 @@ public interface MemberMapper {
 	public MemberCommand selectMember(String mem_id);
 	
 	@Update("UPDATE member_detail SET "
-			+ "mem_pw=#{mem_pw},mem_name=#{mem_name},mem_gender=#{mem_gender},mem_phone=#{mem_phone},mem_email=#{mem_email},mem_image=#{mem_image,jdbcType=BLOB},mem_filename=#{mem_filename,jdbcType=VARCHAR}"
+			+ "mem_pw=#{mem_pw},mem_name=#{mem_name},mem_gender=#{mem_gender},mem_phone=#{mem_phone},mem_email=#{mem_email},mem_image=#{mem_image,jdbcType=BLOB},mem_filename=#{mem_filename,jdbcType=VARCHAR} "
 			+ "WHERE mem_id=#{mem_id}")
 	public void update(MemberCommand member);
-	public void delete(String id);
-	public void deleteDetail(String id);
+	
+	@Delete("UPDATE member set mem_auth=0 WHERE mem_id=#{mem_id}")
+	public void delete(String mem_id);
+	
+	@Delete("DELETE FROM member_detail WHERE mem_id=#{mem_id}")
+	public void deleteDetail(String mem_id);
 }

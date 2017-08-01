@@ -84,10 +84,16 @@ form input[type="text"],form input[type="password"],form textarea{
 form#register_form input#id{
 	width:150px;
 }
-#register_form label, #modify_form label, #delete_form label,#login_form label{
+#register_form label, #update_form label, #delete_form label,#login_form label{
 	font-size:11pt;
 	font-family:"맑은 고딕";
-	width:140px;
+	width:250px;
+	float:left;
+}
+#driver_register_form{
+	font-size:11pt;
+	font-family:"맑은 고딕";
+	width:600px;
 	float:left;
 }
 .error-color{

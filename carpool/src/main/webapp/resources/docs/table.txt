@@ -1,7 +1,8 @@
 -- member table --
 create table member(
     mem_id varchar2(30) not null primary key,
-    mem_auth number(1) default 1 not null
+    mem_auth number(1) default 1 not null,
+    mem_driver number(1) default 1 not null
 );
 create table member_detail(
     mem_id varchar2(30) not null primary key,
@@ -17,11 +18,11 @@ create table member_detail(
     constraint member_detail_fk1 foreign key (mem_id) references member (mem_id)
 );
 
-
 -- car table --
 create table car(
     car_seq number not null primary key,
     car_image blob,
+    car_filename varchar2(100),
     car_registration_num varchar2(30) not null,
     car_model varchar2(30) not null
 );
@@ -33,11 +34,12 @@ create sequence car_seq;
 create table driver(
     driver_seq number not null primary key,
     driver_license_num varchar2(20) not null,
-    driver_account number not null,
-    driver_can_animal char(1),
-    driver_can_smoking char(1),
-    driver_can_charge char(1),
-    driver_money number not null,
+    driver_bank varchar2(30) not null,
+    driver_account varchar2(30) not null,
+    driver_can_animal char(1) default 'n' not null,
+    driver_can_smoking char(1) default 'n' not null,
+    driver_can_charge char(1) default 'n' not null,
+    driver_money number default 0 not null,
     driver_date date not null,
     mem_id varchar2(30) not null,
     car_seq number not null,

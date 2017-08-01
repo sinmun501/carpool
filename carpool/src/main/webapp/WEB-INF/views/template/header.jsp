@@ -10,6 +10,8 @@
 		<li><a href="${pageContext.request.contextPath}/member/mypage.do">마이페이지</a></li>
 		<li>${user_id}님 로그인중</li>
 		<li><a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a></li>
+		<br>
+		<li><a href="${pageContext.request.contextPath}/member/driverWrite.do">운전자 등록하기</a></li>
 	</c:if>
 </ul>
 <div class="align-center">
