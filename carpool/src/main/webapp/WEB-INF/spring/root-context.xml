@@ -50,6 +50,27 @@
 		<!-- DAO 등록 -->
 		<property name="basePackage" value="car.pool.member.dao"/>
 	</bean>
+	
+	<!-- 이메일 보내기 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="dmstjr0921@gmail.com" />
+		<property name="password" value="dltjr9528" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 이메일 보내기 -->
+	
+	<bean id="email" class="car.pool.member.email.Email" />
+    <bean id="emailSender" class="car.pool.member.email.EmailSender" />
+	
 </beans>
 
 

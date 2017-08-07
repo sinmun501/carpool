@@ -19,7 +19,7 @@ div#main_menu{
 }
 div#main_body{
 	float:left;
-	width:78%;
+	width:85%;
 	padding:5px;
 }
 div#main_footer{
@@ -82,9 +82,9 @@ form input[type="text"],form input[type="password"],form textarea{
 	width:350px;
 }
 form#register_form input#id{
-	width:150px;
+	width:350px;
 }
-#register_form label, #update_form label, #delete_form label,#login_form label{
+#register_form label, #update_form label, #delete_form label,#login_form label,#driver_Update_form label,#driver_register_form label{
 	font-size:11pt;
 	font-family:"맑은 고딕";
 	width:250px;
@@ -93,7 +93,7 @@ form#register_form input#id{
 #driver_register_form{
 	font-size:11pt;
 	font-family:"맑은 고딕";
-	width:600px;
+	width:700px;
 	float:left;
 }
 .error-color{

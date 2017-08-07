@@ -3,15 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <ul class="header-member">
 	<c:if test="${empty user_id}">
-		<li><a href="${pageContext.request.contextPath}/member/write.do">회원가입</a></li>
+		<li><a href="${pageContext.request.contextPath}/member/agree.do">회원가입</a></li>
 		<li><a href="${pageContext.request.contextPath}/member/login.do">로그인</a></li>
 	</c:if>
 	<c:if test="${!empty user_id}">
 		<li><a href="${pageContext.request.contextPath}/member/mypage.do">마이페이지</a></li>
 		<li>${user_id}님 로그인중</li>
 		<li><a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a></li>
-		<br>
-		<%-- <li><a href="${pageContext.request.contextPath}/member/driverWrite.do">운전자 등록</a></li> --%>
 	</c:if>
 </ul>
 <div class="align-center">

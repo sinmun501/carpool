@@ -21,8 +21,8 @@ public class ImageView extends AbstractView {
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		byte[] file = (byte[]) model.get("imageFile");			// BoardDetailController의 viewImage메소드에서 받는다.
-		String filename = (String) model.get("filename");		// BoardDetailController의 viewImage메소드에서 받는다.
+		byte[] file = (byte[]) model.get("imageFile");		
+		String filename = (String) model.get("filename");		
 
 		String ext = filename.substring(filename.lastIndexOf("."));
 		if(ext.equalsIgnoreCase(".gif")){
@@ -51,7 +51,7 @@ public class ImageView extends AbstractView {
 		OutputStream out = response.getOutputStream();
 
 		InputStream input = new ByteArrayInputStream(file); // ByteArrayInputStream으로 파일을 읽어들임.
-		IOUtils.copy(input, out);		// IOUtils 스트림이 boardView의 img태그로 간다.
+		IOUtils.copy(input, out);		// IOUtils 스트림이 뷰쪽의 img태그로 간다.
 		out.flush();
 		out.close();
 		input.close();

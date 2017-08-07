@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import car.pool.member.domain.DriverMemberCommand;
 import car.pool.member.domain.MemberCommand;
+import car.pool.member.email.Email;
+import car.pool.member.email.EmailSender;
+import car.pool.member.service.DriverMemberService;
 import car.pool.member.service.MemberService;
 
 @Controller
@@ -29,26 +35,41 @@ public class MemberController {
 	@Resource
 	private MemberService memberService;
 	
+	@Resource
+	private DriverMemberService driverMemberService;
+	
+	@Autowired
+	private EmailSender emailSender;
+	
+	@Autowired
+	private Email email;
+	
 	//커맨드 객체 초기화 (커스텀 태그를 사용하기 위함.)
 	@ModelAttribute("command")
 	public MemberCommand initCommand(){
 		return new MemberCommand();
 	}
 	
+	//약관동의 
+	@RequestMapping(value="/member/agree.do", method=RequestMethod.GET)
+	public String agreeForm(){
+		
+		return "memberAgree";
+	}
+	
+	
 	//회원가입 폼
 	@RequestMapping(value="/member/write.do", method=RequestMethod.GET)
 	public String writeForm(){
+		
 		return "memberWrite";	
 	}
 	//회원가입
 	@RequestMapping(value="/member/write.do", method=RequestMethod.POST)
-	public String writeSubmit(@ModelAttribute("command") @Valid MemberCommand memberCommand, BindingResult result){
+	public String writeSubmit(@ModelAttribute("command") MemberCommand memberCommand){
 		
 		if(log.isDebugEnabled())
 			log.debug("memberCommand : " + memberCommand);
-		
-		if(result.hasErrors())
-			return writeForm();
 		
 		memberService.insert(memberCommand);
 		
@@ -135,6 +156,74 @@ public class MemberController {
 		return "redirect:/main/main.do";
 	}
 	
+	@RequestMapping("/member/kakaoTalk.do")
+	public String kakaoLogin(){
+		
+		return "kakaoTalk";
+	}
+	
+	/*//ID 찾기 폼(계정찾기)
+	@RequestMapping(value="/member/search.do", method=RequestMethod.GET)
+	public String searchIdForm(){
+		
+		return "memberSearchID";
+	}
+	
+	//ID 찾기
+	@RequestMapping(value="/member/search.do", method=RequestMethod.POST)
+	public ModelAndView sendEmailActionId(@RequestParam("mem_name") String name, @RequestParam("mem_email") String e_mail) throws Exception {
+
+		if(log.isDebugEnabled()){
+			log.debug("<<name>> : " + name);
+			log.debug("<<e_mail>> : " + e_mail);
+		}
+		
+		ModelAndView mav;
+		MemberCommand member = memberService.searchMemberId(e_mail);
+		String id=member.getMem_id();
+				
+        if(id!=null) {
+            email.setContent(name +"님의 아이디는 "+id+" 입니다.");
+            email.setReceiver(e_mail);
+            email.setSubject("[CarPool] 아이디 찾기 메일입니다.");
+            emailSender.SendEmail(email);
+            mav= new ModelAndView("redirect:/member/login.do");
+            return mav;
+        }else {
+            mav=new ModelAndView("redirect:/member/logout.do");
+            return mav;
+        }
+    }*/
+	
+	//비밀번호찾기 폼
+	@RequestMapping(value="/member/searchPw.do", method=RequestMethod.GET)
+	public String searchPwForm(){
+		
+		return "memberSearchPW";
+	}
+	
+	//비밀번호찾기
+	@RequestMapping(value="/member/searchPw.do", method=RequestMethod.POST)
+	public ModelAndView sendEmailAction (@RequestParam("mem_id") String id, @RequestParam("mem_email") String e_mail) throws Exception {
+
+		ModelAndView mav;
+		MemberCommand member = memberService.selectMember(id);
+		String pw=member.getMem_pw();
+		
+        if(pw!=null) {
+            email.setContent(id +"님의 비밀번호는 "+pw+" 입니다.");
+            email.setReceiver(e_mail);
+            email.setSubject("[CarPool] 비밀번호 찾기 메일입니다.");
+            emailSender.SendEmail(email);
+            mav= new ModelAndView("redirect:/member/login.do");
+            return mav;
+        }else {
+            mav=new ModelAndView("redirect:/member/logout.do");
+            return mav;
+        }
+    }
+
+	
 	//마이페이지 (상세)
 	@RequestMapping("/member/mypage.do")
 	public String mypage(HttpSession session, Model model){ 
@@ -143,11 +232,15 @@ public class MemberController {
 		String id = (String)session.getAttribute("user_id");
 
 		MemberCommand member = memberService.selectMember(id);
+		DriverMemberCommand driverMember = driverMemberService.driverSelectMember(id);
 		
-		if(log.isDebugEnabled())
+		if(log.isDebugEnabled()) {
 			log.debug("<<memberCommand>> : " + member);
+			log.debug("<<driverMember>> : " + driverMember);
+		}
 			
 		model.addAttribute("member", member);
+		model.addAttribute("driverMember", driverMember);
 
 		return "memberMyPage";
 	}
@@ -176,18 +269,31 @@ public class MemberController {
 		MemberCommand member = memberService.selectMember(id);
 		model.addAttribute("command", member);
 		
+		String[] phone = member.getMem_phone().split("-");
+		model.addAttribute("phone", phone);
+
+		String[] email = member.getMem_email().split("@");
+		model.addAttribute("email", email);
+		
 		return "memberUpdate";
 	}
 	
 	//회원수정
 	@RequestMapping(value="/member/update.do", method=RequestMethod.POST)
-	public String update(@ModelAttribute("command") @Valid MemberCommand memberCommand, BindingResult result){
+	public String update(@ModelAttribute("command") MemberCommand memberCommand, HttpSession session){
 		
 		if(log.isDebugEnabled())
 			log.debug("<<memberCommand>> : " + memberCommand);
 		
-		if(result.hasErrors())
-			return "memberUpdate";
+		String id = (String)session.getAttribute("user_id");
+		MemberCommand member = memberService.selectMember(id);
+		
+		//전송된 파일이 없을 경우
+		if(memberCommand.getUpload().isEmpty()){
+			//기존 정보 셋팅
+			memberCommand.setMem_image(member.getMem_image());
+			memberCommand.setMem_filename(member.getMem_filename());
+		}
 		
 		// 회원정보 수정. 
 		memberService.update(memberCommand);

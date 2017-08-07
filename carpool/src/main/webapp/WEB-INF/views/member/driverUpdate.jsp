@@ -1,21 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>    
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#driver_register_form').submit(function(){
-			alert($('#mem_id').val() + '님이 운전자로 등록되었습니다.');
+<script>
+	$(document).ready(function() {
+		
+		$('#driver_Update_form').submit(function(){
+			alert('운전자 정보 수정 완료!!');
 		});
+		
 	});
 </script>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
 
 <div class="page-main-style">
-   <h1>운전자 등록</h1>
-   <form:form commandName="driverCommand" action="driverWrite.do" enctype="multipart/form-data" id="driver_register_form">
+   <h1>운전자 정보 수정</h1>
+   <form:form commandName="driverCommand" action="driverUpdate.do" enctype="multipart/form-data" id="driver_Update_form">
    	  <form:hidden path="mem_id" />
-      <%-- <form:errors element="div" cssClass="error-color"/> --%>
+   	  <form:hidden path="car_seq" />
       <ul>
          <li>
             <label for="driver_license_num">면허증 번호</label>
@@ -42,22 +45,44 @@
          </li>
          <li>
 			<label for="driver_can_animal">애완동물 탑승 여부</label>
-			<input type="radio" name="driver_can_animal" value="Yes">가능
-			<input type="radio" name="driver_can_animal" value="No" checked>불가능
+			<c:if test="${driverCommand.driver_can_animal eq 'Yes'}">
+				 <input type="radio" name="driver_can_animal" value="Yes" checked>가능
+				 <input type="radio" name="driver_can_animal" value="No">불가능
+			</c:if>
+			<c:if test="${driverCommand.driver_can_animal eq 'No'}">
+				 <input type="radio" name="driver_can_animal" value="Yes" >가능
+				 <input type="radio" name="driver_can_animal" value="No" checked>불가능
+			</c:if>
 		 </li>
 		 <li>
 			<label for="driver_can_smoking">흡연 여부</label>
-			<input type="radio" name="driver_can_smoking" value="Yes">가능
-			<input type="radio" name="driver_can_smoking" value="No" checked>불가능
+			<c:if test="${driverCommand.driver_can_smoking eq 'Yes'}">
+				<input type="radio" name="driver_can_smoking" value="Yes" checked>가능
+				<input type="radio" name="driver_can_smoking" value="No" >불가능
+			</c:if>
+			<c:if test="${driverCommand.driver_can_smoking eq 'No'}">
+				<input type="radio" name="driver_can_smoking" value="Yes" >가능
+				<input type="radio" name="driver_can_smoking" value="No" checked>불가능
+			</c:if>
 		 </li>
 		 <li>	
 			<label for="driver_can_charge">충전기 유/무</label>
-			<input type="radio" name="driver_can_charge" value="Yes">보유
-			<input type="radio" name="driver_can_charge" value="No" checked>미보유
+			<c:if test="${driverCommand.driver_can_charge eq 'Yes'}">
+				<input type="radio" name="driver_can_charge" value="Yes" checked>가능
+				<input type="radio" name="driver_can_charge" value="No" >불가능
+			</c:if>
+			<c:if test="${driverCommand.driver_can_charge eq 'No'}">
+				<input type="radio" name="driver_can_charge" value="Yes" >가능
+				<input type="radio" name="driver_can_charge" value="No" checked>불가능
+			</c:if>
          </li>
          <li>
             <label for="car_upload">자동차 이미지</label>
 			<input type="file" name="car_upload" id="car_upload">
+			<c:if test="${!empty driverCommand.car_filename}">
+ 				<br>
+ 				<span>(${driverCommand.car_filename})파일이 등록되어 있습니다. 다시 업로드 하면 기존 파일은 삭제됩니다.</span>
+ 			</c:if>
          </li>
          <li>
             <label for="car_registration_num">차량번호</label>
@@ -72,7 +97,7 @@
       </ul>
       
       <div class="align-center">
-         <input type="submit" value="운전자 등록">
+         <input type="submit" value="운전자 수정">
          <input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
       </div>
    </form:form>

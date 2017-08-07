@@ -83,9 +83,12 @@
 			<mapping path="/member/update.do"/>
 			<mapping path="/member/delete.do"/>
 			<mapping path="/member/driverWrite.do"/>
+			<mapping path="/member/driverDetail.do"/>
+			<mapping path="/member/driverUpdate.do"/>
 			<beans:bean class="car.pool.member.interceptor.LoginCheckInterceptor" />
 		</interceptor>
 	</interceptors>
+
 	
 	
 </beans:beans>

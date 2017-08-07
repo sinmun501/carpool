@@ -9,7 +9,7 @@ create table member_detail(
     mem_pw varchar2(30) not null,
     mem_name varchar2(30) not null,
     mem_gender varchar2(3) not null,
-    mem_grade varchar2(5) default '일반회원' not null,
+    mem_grade varchar2(15) default '일반회원' not null,
     mem_phone varchar2(15) not null,
     mem_email varchar2(50) not null,
     mem_date date not null,

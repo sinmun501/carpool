@@ -31,4 +31,9 @@ public interface MemberMapper {
 	
 	@Delete("DELETE FROM member_detail WHERE mem_id=#{mem_id}")
 	public void deleteDetail(String mem_id);
+	
+	/*@Select("SELECT * FROM member m LEFT OUTER JOIN member_detail d "
+			+ "on m.mem_id=d.mem_id "
+			+ "WHERE d.mem_email=#{e_mail}")
+	public MemberCommand searchMemberId(String e_mail);*/
 }

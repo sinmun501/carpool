@@ -13,4 +13,8 @@ public interface MemberService {
 	public void update(MemberCommand member);
 	public void delete(String id);
 	
+	/*@Transactional(readOnly=true)
+	public MemberCommand searchMemberId(String e_mail);*/
+	
+	
 }

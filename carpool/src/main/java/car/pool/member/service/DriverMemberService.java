@@ -8,4 +8,7 @@ import car.pool.member.domain.DriverMemberCommand;
 public interface DriverMemberService {
 
 	public void insert(DriverMemberCommand driverMember);
+	@Transactional(readOnly=true)
+	public DriverMemberCommand driverSelectMember(String mem_id);
+	public void driverUpdate(DriverMemberCommand driverMember);
 }

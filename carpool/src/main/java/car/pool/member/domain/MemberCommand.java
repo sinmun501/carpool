@@ -15,16 +15,15 @@ public class MemberCommand {
 	@NotEmpty
 	private String mem_id;
 	private int mem_auth;	/* 0탈퇴회원, 1일반회원, 2관리자 */
+	private int mem_driver; /* 1일반회원, 2운전자회원 */
 	@Size(min=4,max=10)
 	private String mem_pw;
 	@NotEmpty
 	private String mem_name;
-	@NotEmpty
 	private String mem_gender;
 	private String mem_grade;
 	@NotEmpty
 	private String mem_phone;
-	@Email
 	@NotEmpty
 	private String mem_email;
 	private Date mem_date;
@@ -61,6 +60,13 @@ public class MemberCommand {
 
 	public void setMem_auth(int mem_auth) {
 		this.mem_auth = mem_auth;
+	}
+	public int getMem_driver() {
+		return mem_driver;
+	}
+
+	public void setMem_driver(int mem_driver) {
+		this.mem_driver = mem_driver;
 	}
 	public String getMem_pw() {
 		return mem_pw;
@@ -124,10 +130,10 @@ public class MemberCommand {
 
 	@Override
 	public String toString() {
-		return "MemberCommand [mem_id=" + mem_id + ", mem_auth=" + mem_auth + ", mem_pw=" + mem_pw + ", mem_name=" + mem_name
-				+ ", mem_gender=" + mem_gender + ", mem_grade=" + mem_grade + ", mem_phone=" + mem_phone
-				+ ", mem_email=" + mem_email + ", mem_date=" + mem_date + ", upload=" + upload + ", mem_filename="
-				+ mem_filename + "]";
+		return "MemberCommand [mem_id=" + mem_id + ", mem_auth=" + mem_auth + ", mem_driver=" + mem_driver + ", mem_pw="
+				+ mem_pw + ", mem_name=" + mem_name + ", mem_gender=" + mem_gender + ", mem_grade=" + mem_grade
+				+ ", mem_phone=" + mem_phone + ", mem_email=" + mem_email + ", mem_date=" + mem_date + ", upload="
+				+ upload + ", mem_filename=" + mem_filename + "]";
 	}
 	
 }

@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>   
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>    
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#delete_form').submit(function(){
+			alert($('#mem_id').val() + '님 계정이 탈퇴되었습니다.');
+		});
+	});
+</script>
 
 <div class="page-main-style">
    <h1>회원 탈퇴</h1>

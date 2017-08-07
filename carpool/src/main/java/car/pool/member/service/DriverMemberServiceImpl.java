@@ -21,4 +21,17 @@ public class DriverMemberServiceImpl implements DriverMemberService{
 		driverMapper.insert(driverMember);
 	}
 
+	@Override
+	public DriverMemberCommand driverSelectMember(String mem_id) {
+		return driverMapper.driverSelectMember(mem_id);
+	}
+
+	@Override
+	public void driverUpdate(DriverMemberCommand driverMember) {
+		driverMapper.driverUpdateCar(driverMember);
+		driverMapper.driverUpdateDriver(driverMember);
+	}
+	
+	
+
 }

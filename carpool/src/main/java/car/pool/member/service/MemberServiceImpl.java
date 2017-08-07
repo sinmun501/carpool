@@ -24,6 +24,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.selectMember(mem_id);
 	}
 
+	
 	@Override
 	public void update(MemberCommand member) {
 		memberMapper.update(member);
@@ -34,5 +35,10 @@ public class MemberServiceImpl implements MemberService{
 		memberMapper.delete(id);
 		memberMapper.deleteDetail(id);
 	}
+
+	/*@Override
+	public MemberCommand searchMemberId(String e_mail) {
+		return memberMapper.searchMemberId(e_mail);
+	}*/
 
 }
