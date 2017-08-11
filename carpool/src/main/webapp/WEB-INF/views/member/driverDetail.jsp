@@ -47,7 +47,7 @@
 		</tr>
 		<tr>
 			<td>보유돈</td>
-			<td>${driverMember.dirver_money}</td>
+			<td>${driverMember.driver_money}</td>
 		</tr>
 		<tr>
 			<td>운전자 등록날짜</td>

@@ -156,12 +156,6 @@ public class MemberController {
 		return "redirect:/main/main.do";
 	}
 	
-	@RequestMapping("/member/kakaoTalk.do")
-	public String kakaoLogin(){
-		
-		return "kakaoTalk";
-	}
-	
 	/*//ID 찾기 폼(계정찾기)
 	@RequestMapping(value="/member/search.do", method=RequestMethod.GET)
 	public String searchIdForm(){
@@ -197,30 +191,48 @@ public class MemberController {
 	
 	//비밀번호찾기 폼
 	@RequestMapping(value="/member/searchPw.do", method=RequestMethod.GET)
-	public String searchPwForm(){
-		
-		return "memberSearchPW";
+	public ModelAndView searchPwForm(){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("memberSearchPW");	
+		return mav;
 	}
 	
-	//비밀번호찾기
-	@RequestMapping(value="/member/searchPw.do", method=RequestMethod.POST)
-	public ModelAndView sendEmailAction (@RequestParam("mem_id") String id, @RequestParam("mem_email") String e_mail) throws Exception {
-
-		ModelAndView mav;
-		MemberCommand member = memberService.selectMember(id);
-		String pw=member.getMem_pw();
+	//비밀번호찾기 
+	@RequestMapping(value="/member/searchPwAlert.do")
+	@ResponseBody
+	public Map<String, Object> sendEmailAlert (@RequestParam("mem_id") String id, @RequestParam("mem_email") String e_mail) throws Exception {
 		
-        if(pw!=null) {
-            email.setContent(id +"님의 비밀번호는 "+pw+" 입니다.");
-            email.setReceiver(e_mail);
-            email.setSubject("[CarPool] 비밀번호 찾기 메일입니다.");
-            emailSender.SendEmail(email);
-            mav= new ModelAndView("redirect:/member/login.do");
-            return mav;
-        }else {
-            mav=new ModelAndView("redirect:/member/logout.do");
-            return mav;
-        }
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		
+		MemberCommand member = memberService.selectMember(id);
+
+		
+		int mem_auth = 1;
+		
+		if(member != null){
+			mem_auth = member.getMem_auth();
+		}else{
+			mem_auth = 0;
+		}
+		
+		if(mem_auth == 1 || mem_auth == 2){
+			String pw = member.getMem_pw();
+			
+			if(member.getMem_email().equals(e_mail)){
+				if(pw!=null) {
+		            email.setContent(id +"님의 비밀번호는 "+pw+" 입니다.");
+		            email.setReceiver(e_mail);
+		            email.setSubject("[CarPool] 비밀번호 찾기 메일입니다.");
+		            emailSender.SendEmail(email);
+		        }
+			}else{
+				mem_auth = 3;
+			}
+		}
+		
+		mapJson.put("mem_auth", mem_auth);
+		
+		return mapJson;
     }
 
 	

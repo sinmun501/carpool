@@ -4,7 +4,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#searchPw_form').submit(function(){
+		$('#searchPw_form').submit(function(e){
+			e.preventDefault();
+			
 			if($('#mem_id').val()==''){
 				alert('아이디를 입력하세요!');
 				$('#mem_id').focus();
@@ -16,16 +18,42 @@
 				return false;
 			}
 			
-			alert("메일로 전송되었습니다.\n메일을 확인하세요.");
+			/* alert("메일로 전송되었습니다.\n메일을 확인하세요."); */
+			
+			$.ajax({
+				url:'searchPwAlert.do',
+				type:'post',
+				data:{
+					mem_id:$("#mem_id").val(),
+					mem_email:$("#mem_email").val()
+				},
+				dataType:'json',
+				success:function(data){
+					var mem_auth = data.mem_auth;
+					
+					if(mem_auth == 1 || mem_auth == 2){
+						alert("메일로 전송되었습니다.\n메일을 확인하세요.");
+						location.href='login.do';
+					}else if(mem_auth == 0){
+						alert("입력하신 계정이 존재 하지 않습니다.");
+						location.href='searchPw.do';
+					}else if(mem_auth == 3){
+						alert("이메일이 일치하지 않습니다.");
+					}else{
+						alert("올바르지 않는 계정입니다");
+						location.href='searchPw.do';
+					}
+				},
+				error:function(){
+					alert('네트워크 오류');
+				}
+			});
 		});
 	});
 </script>
 
 <div class="page-main-style">
    <h1>비밀번호 찾기</h1>
-   <%-- <p class="align-right">
-   		<a href="${pageContext.request.contextPath}/member/search.do">ID 찾기</a>
-   </p> --%>
    <form action="searchPw.do" id="searchPw_form" method="post">
       <ul>
       	 <li>

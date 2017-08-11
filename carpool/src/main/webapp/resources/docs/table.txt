@@ -36,9 +36,9 @@ create table driver(
     driver_license_num varchar2(20) not null,
     driver_bank varchar2(30) not null,
     driver_account varchar2(30) not null,
-    driver_can_animal char(1) default 'n' not null,
-    driver_can_smoking char(1) default 'n' not null,
-    driver_can_charge char(1) default 'n' not null,
+    driver_can_animal varchar2(10) default 'No' not null,
+    driver_can_smoking varchar2(10) default 'No' not null,
+    driver_can_charge varchar2(10) default 'No' not null,
     driver_money number default 0 not null,
     driver_date date not null,
     mem_id varchar2(30) not null,
@@ -47,5 +47,7 @@ create table driver(
     constraint driver_fk1 foreign key (mem_id) references member (mem_id),
     constraint driver_fk2 foreign key (car_seq) references car (car_seq)
 );
+
+ALTER TABLE driver ADD UNIQUE (mem_id);
 
 create sequence driver_seq;

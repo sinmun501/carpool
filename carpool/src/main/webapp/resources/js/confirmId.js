@@ -45,7 +45,7 @@ $(document).ready(function(){
 		$('#message_id').text('');
 	});
 	
-	//submit 이벤트 발생시 아이디 중복 체크 여부 확인
+	//submit 이벤트 발생시 아이디 중복 체크 여부 확인, 유효성체크
 	$('#register_form').submit(function(){
 		if(checkIdDuplicated == 0){
 			alert('아이디 중복 체크 필수!!');
@@ -57,11 +57,7 @@ $(document).ready(function(){
 			}
 			return false;
 		}
-	});
-	
-	
-	//회원가입 유효성체크
-	$('#register_form').submit(function(){
+		
 		if($('#mem_id').val()==''){
 			alert('아이디를 입력하세요!');
 			$('#mem_id').focus();
@@ -115,9 +111,9 @@ $(document).ready(function(){
 		totalEmail += $("#emailSelect").val();
 		
 		$("#mem_email").val(totalEmail);
-		
-		
 	});
+	
+	
 	
 	//회원정보수정 유효성체크
 	$('#update_form').submit(function(){

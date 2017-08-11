@@ -18,7 +18,7 @@ public class DriverMemberCommand {
 	private String driver_can_animal;
 	private String driver_can_smoking;
 	private String driver_can_charge;
-	private int dirver_money;
+	private int driver_money;
 	private Date driver_date;
 	private String mem_id;
 	private int car_seq;
@@ -81,11 +81,11 @@ public class DriverMemberCommand {
 	public void setDriver_can_charge(String driver_can_charge) {
 		this.driver_can_charge = driver_can_charge;
 	}
-	public int getDirver_money() {
-		return dirver_money;
+	public int getDriver_money() {
+		return driver_money;
 	}
-	public void setDirver_money(int dirver_money) {
-		this.dirver_money = dirver_money;
+	public void setDriver_money(int driver_money) {
+		this.driver_money = driver_money;
 	}
 	public Date getDriver_date() {
 		return driver_date;
@@ -138,7 +138,7 @@ public class DriverMemberCommand {
 		return "DriverMemberCommand [driver_seq=" + driver_seq + ", driver_license_num=" + driver_license_num
 				+ ", driver_bank=" + driver_bank + ", driver_account=" + driver_account + ", driver_can_animal="
 				+ driver_can_animal + ", driver_can_smoking=" + driver_can_smoking + ", driver_can_charge="
-				+ driver_can_charge + ", dirver_money=" + dirver_money + ", driver_date=" + driver_date + ", mem_id="
+				+ driver_can_charge + ", dirver_money=" + driver_money + ", driver_date=" + driver_date + ", mem_id="
 				+ mem_id + ", car_seq=" + car_seq + ", car_registration_num=" + car_registration_num + ", car_model="
 				+ car_model + ", car_upload=" + car_upload + ", car_filename=" + car_filename + "]";
 	}
