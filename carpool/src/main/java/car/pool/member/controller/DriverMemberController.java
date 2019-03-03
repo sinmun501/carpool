@@ -21,7 +21,7 @@ import car.pool.member.service.MemberService;
 
 @Controller
 public class DriverMemberController {
-
+//111
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Resource
@@ -36,7 +36,7 @@ public class DriverMemberController {
 		return new DriverMemberCommand();
 	}
 	
-	//¿îÀüÀÚµî·Ï Æû
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value="/member/driverWrite.do", method=RequestMethod.GET)
 	public String driverWriteForm(HttpSession session, Model model){
 		
@@ -50,7 +50,7 @@ public class DriverMemberController {
 		return "driverWrite";
 	}
 	
-	//¿îÀüÀÚ µî·Ï
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value="/member/driverWrite.do", method=RequestMethod.POST)
 	public String driverWrite(@ModelAttribute("driverCommand") @Valid DriverMemberCommand drivermemberCommand, BindingResult result){
 		
@@ -65,11 +65,11 @@ public class DriverMemberController {
 		return "redirect:/main/main.do";
 	}
 	
-	//¿îÀüÀÚ Á¤º¸È®ÀÎ (»ó¼¼)
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ (ï¿½ï¿½)
 	@RequestMapping("/member/driverDetail.do")
 	public String driverMypage(HttpSession session, Model model){ 
 
-		//session¿¡¼­ id¸¦ ²ôÁý¾î³»¼­ 1°ÇÀÇ µ¥ÀÌÅÍ¸¦ °¡Á®¿È.
+		//sessionï¿½ï¿½ï¿½ï¿½ idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î³»ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		String id = (String)session.getAttribute("user_id");
 
 		DriverMemberCommand driverMember = driverMemberService.driverSelectMember(id);
@@ -82,14 +82,14 @@ public class DriverMemberController {
 		return "driverDetail";
 	}
 	
-	// ¸¶ÀÌÆäÀÌÁö ÀÌ¹ÌÁö Ãâ·Â
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping("/member/carimageView.do")
 	public ModelAndView viewImage(@RequestParam("mem_id") String mem_id) {
 
 		DriverMemberCommand driverMember = driverMemberService.driverSelectMember(mem_id);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("imageView");   // imageView °´Ã¼ È£Ãâ
+		mav.setViewName("imageView");   // imageView ï¿½ï¿½Ã¼ È£ï¿½ï¿½
 		mav.addObject("imageFile", driverMember.getCar_image());
 		mav.addObject("filename", driverMember.getCar_filename());
 
@@ -97,7 +97,7 @@ public class DriverMemberController {
 	}
 	
 	
-	//¿îÀüÀÚ ¼öÁ¤ Æû
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value="/member/driverUpdate.do", method=RequestMethod.GET)
 	public String driverUpdateForm(HttpSession session, Model model){ 
 
@@ -109,7 +109,7 @@ public class DriverMemberController {
 		return "driverUpdate";
 	}
 	
-	//¿îÀüÀÚ ¼öÁ¤
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/member/driverUpdate.do", method=RequestMethod.POST)
 	public String update(@ModelAttribute("driverCommand") @Valid DriverMemberCommand drivermemberCommand, BindingResult result, HttpSession session){
 		
@@ -123,14 +123,14 @@ public class DriverMemberController {
 		String id = (String)session.getAttribute("user_id");
 		DriverMemberCommand driverMember = driverMemberService.driverSelectMember(id);
 		
-		//Àü¼ÛµÈ ÆÄÀÏÀÌ ¾øÀ» °æ¿ì
+		//ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(drivermemberCommand.getCar_upload().isEmpty()){
-			//±âÁ¸ Á¤º¸ ¼ÂÆÃ
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			drivermemberCommand.setCar_image(driverMember.getCar_image());
 			drivermemberCommand.setCar_filename(driverMember.getCar_filename());
 		}
 		
-		// ¿îÀüÀÚ Á¤º¸ ¼öÁ¤. 
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. 
 		driverMemberService.driverUpdate(drivermemberCommand);
 		
 		return "redirect:/member/driverDetail.do";
