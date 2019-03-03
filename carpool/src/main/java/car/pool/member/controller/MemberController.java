@@ -31,7 +31,7 @@ import car.pool.member.service.MemberService;
 public class MemberController {
 
 	private Logger log = Logger.getLogger(this.getClass());
-	dsdsad
+	//dsdsadzz
 	@Resource
 	private MemberService memberService;
 	
