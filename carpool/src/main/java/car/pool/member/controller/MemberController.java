@@ -31,7 +31,7 @@ import car.pool.member.service.MemberService;
 public class MemberController {
 
 	private Logger log = Logger.getLogger(this.getClass());
-	
+	dsdsad
 	@Resource
 	private MemberService memberService;
 	
@@ -44,13 +44,13 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
-	//Ä¿¸Çµå °´Ã¼ ÃÊ±âÈ­ (Ä¿½ºÅÒ ÅÂ±×¸¦ »ç¿ëÇÏ±â À§ÇÔ.)
+	//Ä¿ï¿½Çµï¿½ ï¿½ï¿½Ã¼ ï¿½Ê±ï¿½È­ (Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½Â±×¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½.)
 	@ModelAttribute("command")
 	public MemberCommand initCommand(){
 		return new MemberCommand();
 	}
 	
-	//¾à°üµ¿ÀÇ 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	@RequestMapping(value="/member/agree.do", method=RequestMethod.GET)
 	public String agreeForm(){
 		
@@ -58,13 +58,13 @@ public class MemberController {
 	}
 	
 	
-	//È¸¿ø°¡ÀÔ Æû
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value="/member/write.do", method=RequestMethod.GET)
 	public String writeForm(){
 		
 		return "memberWrite";	
 	}
-	//È¸¿ø°¡ÀÔ
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/member/write.do", method=RequestMethod.POST)
 	public String writeSubmit(@ModelAttribute("command") MemberCommand memberCommand){
 		
@@ -77,59 +77,59 @@ public class MemberController {
 	}
 	
 	
-	//·Î±×ÀÎ Æû
+	//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value="/member/login.do", method=RequestMethod.GET)
 	public String loginForm(){
 		return "memberLogin"; 
 	}
 	
-	//·Î±×ÀÎ
+	//ï¿½Î±ï¿½ï¿½ï¿½
 	@RequestMapping(value="/member/login.do", method=RequestMethod.POST)
 	public String login(@ModelAttribute("command") @Valid MemberCommand memberCommand, BindingResult result, HttpSession session){
 		
 		if(log.isDebugEnabled())
 			log.debug("<<memberCommand>> : " + memberCommand);
 		
-		// id¿Í passwd ÇÊµå¸¸ Ã¼Å©!
+		// idï¿½ï¿½ passwd ï¿½Êµå¸¸ Ã¼Å©!
 		if(result.hasFieldErrors("id") || result.hasFieldErrors("passwd"))
 			return loginForm();
 		
-		// ·Î±×ÀÎ Ã¼Å©(ID ¶Ç´Â ºñ¹Ð¹øÈ£ ÀÏÄ¡ ¿©ºÎ Ã¼Å©)
+		// ï¿½Î±ï¿½ï¿½ï¿½ Ã¼Å©(ID ï¿½Ç´ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©)
 		try{
 			MemberCommand member = memberService.selectMember(memberCommand.getMem_id());
 			boolean check = false;
 			
 			if(member != null){
-				//ºñ¹Ð¹øÈ£ ÀÏÄ¡¿©ºÎ Ã¼Å©
+				//ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 				check = member.isCheckedPasswd(memberCommand.getMem_pw());
 			}
 			
 			if(check){
-				//ÀÎÁõ¼º°ø, ·Î±×ÀÎ Ã³¸®
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 				session.setAttribute("user_id", memberCommand.getMem_id());
-				// auth¸¦ session¿¡ ³Ö¾îµÎ°í, session¿¡ ³Ö¾îÁø auth°ªÀÌ 2¸é °ü¸®ÀÚ°¡ È°¿ë°¡´ÉÇÑ ¸Þ´ºµéÀÌ º¸¿©Áø´Ù.
-				session.setAttribute("user_auth", memberCommand.getMem_auth()); // 0Àº Å»ÅðÈ¸¿ø, 1Àº ÀÏ¹ÝÈ¸¿ø, 2´Â °ü¸®ÀÚÈ¸¿ø À¸·Î auth±îÁö session¿¡ ³Ö¾îµÎ¸é °ü¸®ÀÚ±îÁö È®Àå°¡´É.
+				// authï¿½ï¿½ sessionï¿½ï¿½ ï¿½Ö¾ï¿½Î°ï¿½, sessionï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ authï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ È°ï¿½ë°¡ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+				session.setAttribute("user_auth", memberCommand.getMem_auth()); // 0ï¿½ï¿½ Å»ï¿½ï¿½È¸ï¿½ï¿½, 1ï¿½ï¿½ ï¿½Ï¹ï¿½È¸ï¿½ï¿½, 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ authï¿½ï¿½ï¿½ï¿½ sessionï¿½ï¿½ ï¿½Ö¾ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ È®ï¿½å°¡ï¿½ï¿½.
 			
 				return "redirect:/main/main.do";
 			}else{
-				//ÀÎÁõ½ÇÆÐ
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				throw new Exception();
 			}
 			
 		}catch(Exception e){
-			//ÀÎÁõ½ÇÆÐ·Î Æû È£Ãâ
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ ï¿½ï¿½ È£ï¿½ï¿½
 			result.reject("invalidIdOrPassword");
 			return loginForm();
 		}
 	}
 	
-	//·Î±×ÀÎ ½Ã ID Áßº¹Ã¼Å©
+	//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ID ï¿½ßºï¿½Ã¼Å©
 	@RequestMapping("/member/confirmId.do")
 	@ResponseBody 
 	public Map<String, String> confirmId(@RequestParam("mem_id") String mem_id){
 		
 		/*
-		 	JSON ¹®ÀÚ¿­·Î ¸¸µë. (JSONÃ³¸®ÇÒ ¶§´Â tilesÃ³¸®¸¦ ÇÏ¸é ¾ÈµÊ. mapÀ» ¹ÝÈ¯¸¸ ÇØÁÖ¸é tiles¸¦ »ç¿ëÇÏÁö¾Ê°í viewResolverÂÊ order=2 Â÷·Ê·Î°¡¼­ Ã³¸®µÈ´Ù.)
+		 	JSON ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. (JSONÃ³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ tilesÃ³ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½Èµï¿½. mapï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¸ï¿½ tilesï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê°ï¿½ viewResolverï¿½ï¿½ order=2 ï¿½ï¿½ï¿½Ê·Î°ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½È´ï¿½.)
 		*/
 		if(log.isDebugEnabled())
 			log.debug("<<mem_id>> : " + mem_id);
@@ -138,32 +138,32 @@ public class MemberController {
 		
 		MemberCommand member = memberService.selectMember(mem_id);
 		if(member != null){
-			//¾ÆÀÌµðÁßº¹
+			//ï¿½ï¿½ï¿½Ìµï¿½ï¿½ßºï¿½
 			map.put("result", "idDuplicated");
 		}else{
-			//¾ÆÀÌµð ¹ÌÁßº¹
+			//ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ßºï¿½
 			map.put("result", "idNotFound");
 		}
 		
 		return map;
 	}
 	
-	//·Î±×¾Æ¿ô
+	//ï¿½Î±×¾Æ¿ï¿½
 	@RequestMapping("/member/logout.do")
 	public String logout(HttpSession session){
-		//·Î±×¾Æ¿ô
+		//ï¿½Î±×¾Æ¿ï¿½
 		session.invalidate();
 		return "redirect:/main/main.do";
 	}
 	
-	/*//ID Ã£±â Æû(°èÁ¤Ã£±â)
+	/*//ID Ã£ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½)
 	@RequestMapping(value="/member/search.do", method=RequestMethod.GET)
 	public String searchIdForm(){
 		
 		return "memberSearchID";
 	}
 	
-	//ID Ã£±â
+	//ID Ã£ï¿½ï¿½
 	@RequestMapping(value="/member/search.do", method=RequestMethod.POST)
 	public ModelAndView sendEmailActionId(@RequestParam("mem_name") String name, @RequestParam("mem_email") String e_mail) throws Exception {
 
@@ -177,9 +177,9 @@ public class MemberController {
 		String id=member.getMem_id();
 				
         if(id!=null) {
-            email.setContent(name +"´ÔÀÇ ¾ÆÀÌµð´Â "+id+" ÀÔ´Ï´Ù.");
+            email.setContent(name +"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ "+id+" ï¿½Ô´Ï´ï¿½.");
             email.setReceiver(e_mail);
-            email.setSubject("[CarPool] ¾ÆÀÌµð Ã£±â ¸ÞÀÏÀÔ´Ï´Ù.");
+            email.setSubject("[CarPool] ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
             emailSender.SendEmail(email);
             mav= new ModelAndView("redirect:/member/login.do");
             return mav;
@@ -189,7 +189,7 @@ public class MemberController {
         }
     }*/
 	
-	//ºñ¹Ð¹øÈ£Ã£±â Æû
+	//ï¿½ï¿½Ð¹ï¿½È£Ã£ï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value="/member/searchPw.do", method=RequestMethod.GET)
 	public ModelAndView searchPwForm(){
 		ModelAndView mav = new ModelAndView();
@@ -197,7 +197,7 @@ public class MemberController {
 		return mav;
 	}
 	
-	//ºñ¹Ð¹øÈ£Ã£±â 
+	//ï¿½ï¿½Ð¹ï¿½È£Ã£ï¿½ï¿½ 
 	@RequestMapping(value="/member/searchPwAlert.do")
 	@ResponseBody
 	public Map<String, Object> sendEmailAlert (@RequestParam("mem_id") String id, @RequestParam("mem_email") String e_mail) throws Exception {
@@ -220,9 +220,9 @@ public class MemberController {
 			
 			if(member.getMem_email().equals(e_mail)){
 				if(pw!=null) {
-		            email.setContent(id +"´ÔÀÇ ºñ¹Ð¹øÈ£´Â "+pw+" ÀÔ´Ï´Ù.");
+		            email.setContent(id +"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ "+pw+" ï¿½Ô´Ï´ï¿½.");
 		            email.setReceiver(e_mail);
-		            email.setSubject("[CarPool] ºñ¹Ð¹øÈ£ Ã£±â ¸ÞÀÏÀÔ´Ï´Ù.");
+		            email.setSubject("[CarPool] ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 		            emailSender.SendEmail(email);
 		        }
 			}else{
@@ -236,11 +236,11 @@ public class MemberController {
     }
 
 	
-	//¸¶ÀÌÆäÀÌÁö (»ó¼¼)
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½)
 	@RequestMapping("/member/mypage.do")
 	public String mypage(HttpSession session, Model model){ 
 
-		//session¿¡¼­ id¸¦ ²ôÁý¾î³»¼­ 1°ÇÀÇ µ¥ÀÌÅÍ¸¦ °¡Á®¿È.
+		//sessionï¿½ï¿½ï¿½ï¿½ idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î³»ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		String id = (String)session.getAttribute("user_id");
 
 		MemberCommand member = memberService.selectMember(id);
@@ -257,25 +257,25 @@ public class MemberController {
 		return "memberMyPage";
 	}
 	
-	// ¸¶ÀÌÆäÀÌÁö ÀÌ¹ÌÁö Ãâ·Â
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping("/member/imageView.do")
 	public ModelAndView viewImage(@RequestParam("mem_id") String mem_id) {
 
 		MemberCommand member = memberService.selectMember(mem_id);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("imageView");   // imageView °´Ã¼ È£Ãâ
+		mav.setViewName("imageView");   // imageView ï¿½ï¿½Ã¼ È£ï¿½ï¿½
 		mav.addObject("imageFile", member.getMem_image());
 		mav.addObject("filename", member.getMem_filename());
 
 		return mav;
 	}
 	
-	//È¸¿ø¼öÁ¤ Æû
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value="/member/update.do", method=RequestMethod.GET)
 	public String updateForm(HttpSession session, Model model){ 
 		
-		//session¿¡¼­ id¸¦ ²ôÁý¾î³»¼­ 1°ÇÀÇ µ¥ÀÌÅÍ¸¦ °¡Á®¿È.
+		//sessionï¿½ï¿½ï¿½ï¿½ idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î³»ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		String id = (String)session.getAttribute("user_id");
 
 		MemberCommand member = memberService.selectMember(id);
@@ -290,7 +290,7 @@ public class MemberController {
 		return "memberUpdate";
 	}
 	
-	//È¸¿ø¼öÁ¤
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/member/update.do", method=RequestMethod.POST)
 	public String update(@ModelAttribute("command") MemberCommand memberCommand, HttpSession session){
 		
@@ -300,20 +300,20 @@ public class MemberController {
 		String id = (String)session.getAttribute("user_id");
 		MemberCommand member = memberService.selectMember(id);
 		
-		//Àü¼ÛµÈ ÆÄÀÏÀÌ ¾øÀ» °æ¿ì
+		//ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(memberCommand.getUpload().isEmpty()){
-			//±âÁ¸ Á¤º¸ ¼ÂÆÃ
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			memberCommand.setMem_image(member.getMem_image());
 			memberCommand.setMem_filename(member.getMem_filename());
 		}
 		
-		// È¸¿øÁ¤º¸ ¼öÁ¤. 
+		// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. 
 		memberService.update(memberCommand);
 		
 		return "redirect:/member/mypage.do";
 	}
 	
-	//È¸¿øÅ»Åð Æû
+	//È¸ï¿½ï¿½Å»ï¿½ï¿½ ï¿½ï¿½
 	@RequestMapping(value="/member/delete.do", method=RequestMethod.GET)
 	public String deleteForm(HttpSession session, Model model){
 		
@@ -342,18 +342,18 @@ public class MemberController {
 			boolean check = false;
 			
 			if(member != null){
-				//ºñ¹Ð¹øÈ£ ÀÏÄ¡¿©ºÎ Ã¼Å©
+				//ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 				check = member.isCheckedPasswd(memberCommand.getMem_pw());
 			}
 			
 			if(check){
-				//ÀÎÁõ¼º°ø, È¸¿øÁ¤º¸»èÁ¦
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				memberService.delete(memberCommand.getMem_id());
-				//·Î±×¾Æ¿ô
+				//ï¿½Î±×¾Æ¿ï¿½
 				session.invalidate();
 				return "redirect:/main/main.do";
 			}else{
-				//ÀÎÁõ½ÇÆÐ
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				throw new Exception();
 			}
 		}catch(Exception e){
